@@ -1,0 +1,19 @@
+.navbar {
+  justify-content: space-between;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.navbar-item {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.navbar-item > span {
+  margin-left: 20px;
+}
