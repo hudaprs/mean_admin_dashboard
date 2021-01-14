@@ -1,17 +1,19 @@
-<h1>Edit Component</h1>
+<app-admin>
+  <h1>Edit Component</h1>
 
-<form>
-  <mat-form-field>
-    <mat-label>Name</mat-label>
-    <input matInput [(ngModel)]="name" name="name" />
-  </mat-form-field>
+  <form>
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="name" name="name" />
+    </mat-form-field>
 
-  <button
-    mat-raised-button
-    color="primary"
-    type="submit"
-    (click)="onSubmit($event)"
-  >
-    Create
-  </button>
-</form>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      (click)="onSubmit($event)"
+    >
+      Update
+    </button>
+  </form>
+</app-admin>

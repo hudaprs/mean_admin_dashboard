@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 // Layouts
+import { AdminComponent } from './layouts/admin/admin.component';
 import { HeaderComponent } from './layouts/header/header.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { SidebarComponent } from './layouts/sidebar/sidebar.component';
@@ -15,8 +16,10 @@ import { PostComponent } from './post/post.component';
 import { CreateComponent } from './dashboard/create/create.component';
 import { EditComponent } from './dashboard/edit/edit.component';
 import { AboutComponent } from './about/about.component';
+import { AuthComponent } from './auth/auth.component';
 
 // Material
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,6 +34,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const components = [
+  AdminComponent,
   HeaderComponent,
   FooterComponent,
   SidebarComponent,
@@ -40,11 +44,13 @@ const components = [
   SpinnerComponent,
   CreateComponent,
   EditComponent,
+  AuthComponent,
 ];
 
 const coreModules = [CommonModule, RouterModule, FormsModule];
 
 const materialModules = [
+  MatSidenavModule,
   MatDividerModule,
   MatButtonModule,
   MatToolbarModule,

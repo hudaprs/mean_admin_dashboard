@@ -1,59 +1,61 @@
-<div class="flex justify-between">
-  <mat-form-field>
-    <mat-label>Filter</mat-label>
-    <input matInput (keyup)="onFilter($event)" />
-  </mat-form-field>
+<app-admin>
+  <div class="flex justify-between">
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="onFilter($event)" />
+    </mat-form-field>
 
-  <a mat-raised-button color="primary" routerLink="/create"> Create Users </a>
-</div>
-
-<div class="mat-elevation-z8">
-  <table
-    mat-table
-    [dataSource]="dataSource?.data"
-    style="width: 100%; min-width: 450px"
-  >
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
-
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
-      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-    </ng-container>
-
-    <!-- Email Column -->
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef>Email</th>
-      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
-    </ng-container>
-
-    <!-- Action Column -->
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef>Action</th>
-      <td mat-cell *matCellDef="let element">
-        <mat-icon style="cursor: pointer" (click)="onEdit(element)"
-          >edit</mat-icon
-        >
-        <mat-icon
-          (click)="onDelete(element)"
-          style="margin-left: 20px; cursor: pointer"
-          >delete</mat-icon
-        >
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
-  <div>
-    <mat-paginator
-      [pageSizeOptions]="[10, 20]"
-      [pageSize]="dataSource?.meta.limit"
-      [length]="dataSource?.meta.total"
-      (page)="onPaginate($event)"
-      previousPageIndex="0s"
-      showFirstLastButtons
-    ></mat-paginator>
+    <a mat-raised-button color="primary" routerLink="/create"> Create Users </a>
   </div>
-</div>
+
+  <div class="mat-elevation-z8">
+    <table
+      mat-table
+      [dataSource]="dataSource?.data"
+      style="width: 100%; min-width: 450px"
+    >
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+
+      <!-- Email Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+      </ng-container>
+
+      <!-- Action Column -->
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon style="cursor: pointer" (click)="onEdit(element)"
+            >edit</mat-icon
+          >
+          <mat-icon
+            (click)="onDelete(element)"
+            style="margin-left: 20px; cursor: pointer"
+            >delete</mat-icon
+          >
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <div>
+      <mat-paginator
+        [pageSizeOptions]="[10, 20]"
+        [pageSize]="dataSource?.meta.limit"
+        [length]="dataSource?.meta.total"
+        (page)="onPaginate($event)"
+        previousPageIndex="0s"
+        showFirstLastButtons
+      ></mat-paginator>
+    </div>
+  </div>
+</app-admin>

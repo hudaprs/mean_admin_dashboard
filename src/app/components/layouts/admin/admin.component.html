@@ -1,0 +1,13 @@
+<app-header [sidenav]="sidenav"></app-header>
+<mat-drawer-container>
+  <mat-drawer mode="side" #sidenav [(opened)]="sidenavOpened">
+    <app-sidebar></app-sidebar>
+  </mat-drawer>
+  <mat-drawer-content>
+    <app-spinner [loading]="loading"></app-spinner>
+    <div style="padding: 20px">
+      <ng-content></ng-content>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
+<app-footer></app-footer>

@@ -1,0 +1,52 @@
+<div class="auth-container">
+  <div class="auth-centered">
+    <div class="mat-elevation-z8 auth-box">
+      <div class="auth-box-header">
+        <h1>Auth</h1>
+      </div>
+      <mat-divider></mat-divider>
+      <form (ngSubmit)="onSubmit()">
+        <div class="auth-box-body">
+          <mat-form-field *ngIf="!isLoginMode">
+            <mat-label>Name</mat-label>
+            <input matInput required name="name" [(ngModel)]="name" />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput required name="email" [(ngModel)]="email" />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              type="password"
+              required
+              name="password"
+              [(ngModel)]="password"
+            />
+          </mat-form-field>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="auth-box-footer">
+          <button
+            type="submit"
+            mat-raised-button
+            color="primary"
+            [disabled]="loading"
+            style="margin-bottom: 10px"
+          >
+            {{ isLoginMode ? "Login" : "Register" }}
+          </button>
+          <button
+            type="button"
+            mat-raised-button
+            color="accent"
+            (click)="switchMode(!isLoginMode)"
+          >
+            Switch to {{ isLoginMode ? "Register" : "Login" }} mode
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

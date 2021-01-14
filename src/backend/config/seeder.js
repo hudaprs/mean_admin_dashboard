@@ -301,8 +301,8 @@ const datas = [
   }
 ]
 
-import { mongooseConnect } from './index.js'
-import User from './User.js'
+import mongooseConnect from './database'
+import { User } from '../app/models'
 
 mongooseConnect()
 

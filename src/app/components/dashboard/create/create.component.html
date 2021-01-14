@@ -1,36 +1,38 @@
-<h1>Create Your User Here !</h1>
+<app-admin>
+  <h1>Create Your User Here !</h1>
 
-<form>
-  <mat-form-field>
-    <mat-label>Name</mat-label>
-    <input matInput [(ngModel)]="name" name="name" />
-  </mat-form-field>
+  <form>
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="name" name="name" />
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Email</mat-label>
-    <input matInput [(ngModel)]="email" name="email" />
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="email" name="email" />
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Password</mat-label>
-    <input matInput [(ngModel)]="password" name="password" type="password" />
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput [(ngModel)]="password" name="password" type="password" />
+    </mat-form-field>
 
-  <button
-    mat-raised-button
-    color="warn"
-    style="margin-right: 20px"
-    (click)="onCancel()"
-    type="button"
-  >
-    Cancel
-  </button>
-  <button
-    mat-raised-button
-    color="primary"
-    type="submit"
-    (click)="onSubmit($event)"
-  >
-    Create
-  </button>
-</form>
+    <button
+      mat-raised-button
+      color="warn"
+      style="margin-right: 20px"
+      (click)="onCancel()"
+      type="button"
+    >
+      Cancel
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      (click)="onSubmit($event)"
+    >
+      Create
+    </button>
+  </form>
+</app-admin>

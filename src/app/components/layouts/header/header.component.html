@@ -11,7 +11,7 @@
         <mat-icon>settings</mat-icon>
       </button>
       <mat-menu #matMenu="matMenu">
-        <button mat-menu-item>Logout</button>
+        <a mat-menu-item href="#!" (click)="onLogout($event)">Logout</a>
       </mat-menu>
     </div>
   </div>
