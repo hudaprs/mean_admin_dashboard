@@ -1,3 +1,7 @@
 export class Auth {
-  constructor(public token: string) {}
+  constructor(
+    public token: string,
+    public refreshToken: string,
+    public id: string
+  ) {}
 }

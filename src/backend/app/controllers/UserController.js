@@ -9,7 +9,11 @@ export const getUsers = async (req, res) => {
       }
     }
 
-    res.json(await res.paginate(User.find(req.query.name ? searchQuery : {})))
+    res.json(
+      await res.paginate(
+        User.find(req.query.name ? searchQuery : {}).select('-password')
+      )
+    )
   } catch (err) {
     console.error(err)
   }
@@ -17,7 +21,7 @@ export const getUsers = async (req, res) => {
 
 export const getUser = async (req, res) => {
   try {
-    let user = await User.findById(req.params.id)
+    let user = await User.findById(req.params.id).select('-password')
 
     return res.status(200).json(user)
   } catch (err) {
@@ -49,7 +53,7 @@ export const createUser = async (req, res) => {
 
     user.password = hashedPassword
 
-    user.save()
+    await user.save()
 
     return res.status(201).json(user)
   } catch (err) {

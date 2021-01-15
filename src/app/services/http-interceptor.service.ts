@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { throwError } from 'rxjs';
-import { take, exhaustMap, catchError } from 'rxjs/operators';
+import { Subscription, throwError } from 'rxjs';
+import { switchMap, tap, take, exhaustMap, catchError } from 'rxjs/operators';
 
 import {
   HttpRequest,
@@ -14,6 +14,8 @@ import { Auth } from '../models/auth.model';
 
 @Injectable()
 export class HttpInterceptorService implements HttpInterceptor {
+  reLoginSubcription: Subscription;
+
   constructor(private authService: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
@@ -34,14 +36,51 @@ export class HttpInterceptorService implements HttpInterceptor {
       }),
       catchError((err: HttpErrorResponse) => {
         if (err.status === 401) {
-          this.authService.logout();
           console.error('ERROR FROM INTERCEPTOR: UNAUTHORIZED', err);
-          return throwError(err);
-        }
 
-        console.error('ERROR FROM INTERCEPTOR', err);
+          return this.refreshAccessToken().pipe(
+            switchMap((refreshTokenResponse: { body: any }) => {
+              const modifiedRequest = req.clone({
+                headers: new HttpHeaders({
+                  Authorization: `Bearer ${refreshTokenResponse.body.token}`,
+                }),
+              });
+              localStorage.clear();
+              localStorage.setItem('token', refreshTokenResponse.body.token);
+              localStorage.setItem(
+                'refreshToken',
+                refreshTokenResponse.body.refreshToken
+              );
+              localStorage.setItem(
+                'userId',
+                refreshTokenResponse.body.user._id
+              );
+              let auth = new Auth(
+                refreshTokenResponse.body.token,
+                refreshTokenResponse.body.refreshToken,
+                refreshTokenResponse.body.user._id
+              );
+              this.authService.authSubject.next(auth);
+              return next.handle(modifiedRequest);
+            }),
+            catchError((err) => {
+              console.log('ERROR WHEN REFRESH TOKEN');
+              this.authService.logout();
+              return throwError(err);
+            })
+          );
+        }
         return throwError(err);
       })
     );
+  }
+
+  private refreshAccessToken() {
+    return this.authService
+      .reLogin({
+        refreshToken: localStorage.refreshToken,
+        userId: localStorage.userId,
+      })
+      .pipe(tap((token) => token));
   }
 }

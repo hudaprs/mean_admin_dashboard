@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { UserService } from '../../services/user.service';
 import { MatPaginator } from '@angular/material/paginator';
 import User from '../../models/user.model';
@@ -21,6 +22,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['name', 'email', 'action'];
   page: number;
   limit: number;
+  searchSubject: Subject<string> = new Subject();
+  searchSubjectSubscription: Subscription;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -41,6 +44,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       );
 
     this._onUserChange();
+    this._onSearchChange();
   }
 
   onPaginate(paginator) {
@@ -85,22 +89,27 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  onFilter(event) {
+  onHandleSearch(event: any) {
+    console.log(event.target.value);
+    this.searchSubject.next(event.target.value);
+  }
+
+  onSearch(searchValue: string) {
     this.page = 1;
     this.limit = 10;
+    this.paginator.pageIndex = 0;
 
     let query: any = {
       page: this.page,
       limit: this.limit,
     };
 
-    if (event.target.value) {
-      query.name = event.target.value;
+    if (searchValue) {
+      query.name = searchValue;
     } else {
       delete query.name;
     }
 
-    this.paginator.pageIndex = 0;
     this.userService.getUsers(query).subscribe(
       (_) => this.initializeService.setLoading(false),
       (err) => {
@@ -118,7 +127,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
     );
   }
 
+  private _onSearchChange() {
+    this.searchSubjectSubscription = this.searchSubject
+      .pipe(debounceTime(1000), distinctUntilChanged())
+      .subscribe((value) => {
+        this.onSearch(value);
+      });
+  }
+
   ngOnDestroy() {
     this.usersSubscription.unsubscribe();
+    this.searchSubjectSubscription.unsubscribe();
   }
 }

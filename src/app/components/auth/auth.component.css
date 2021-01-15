@@ -12,6 +12,7 @@
 }
 
 .auth-box {
+  padding: 20px;
   width: 400px;
 }
 
@@ -34,4 +35,16 @@ mat-form-field {
 
 button {
   width: 100%;
+}
+
+@media (min-width: 0px) and (max-width: 320px) {
+  .auth-box {
+    width: 260px;
+  }
+}
+
+@media (min-width: 321px) and (max-width: 767px) {
+  .auth-box {
+    width: 300px;
+  }
 }

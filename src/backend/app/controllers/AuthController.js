@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs'
+
 import { User } from '../models/index.js'
-import jwt from 'jsonwebtoken'
+import { generateToken } from '../services/index.js'
 
 export const getAuthenticatedUser = async (req, res) => {
   try {
@@ -29,16 +30,17 @@ export const login = async (req, res) => {
     if (!comparePassword)
       return res.status(422).json({ message: 'Invalid credentials' })
 
-    return jwt.sign(
-      { id: user._id },
-      process.env.JWT_TOKEN_SECRET,
-      { expiresIn: 3600 },
-      (err, token) => {
-        if (err) throw new Error(err)
-
-        return res.status(200).json(token)
+    const { token, refreshToken } = await generateToken({
+      user: {
+        id: user._id
       }
-    )
+    })
+
+    return res.status(200).json({
+      token,
+      refreshToken,
+      user: { ...user._doc, password: undefined }
+    })
   } catch (err) {
     console.error(err)
   }
